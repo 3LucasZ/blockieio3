@@ -18,6 +18,8 @@ Future<void> loadAssets() async {
 class MyGame extends FlameGame {
   List<Component> spriteComponents = [];
   @override
+  Color backgroundColor() => const Color(0xffa1ef8b);
+  @override
   Future<void> onLoad() async {
     await super.onLoad();
     await loadAssets();
