@@ -7,6 +7,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import 'UI/dxdy_joystick.dart';
+import 'UI/inventory.dart';
 import 'UI/theta_joystick.dart';
 import 'game.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
             ),
             const ThetaJoystick(),
             const VelocityJoystick(),
+            InventoryBar()
           ],
         ),
       ),
