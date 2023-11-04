@@ -5,6 +5,7 @@ import 'package:flame/flame.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'constants.dart';
+import 'objects/player_component.dart';
 
 //Create the socket
 WebSocketChannel socket = WebSocketChannel.connect(Uri.parse('ws://$serverIP:$serverPort'));
@@ -14,7 +15,7 @@ Map<String, dynamic> gameState = {
 
 //Socket converters
 SpriteComponent convert_player(Map<String, dynamic> playerState){
-  return SpriteComponent(sprite: Sprite(Flame.images.fromCache('player.png')),position: Vector2(playerState["x"],playerState["y"]), angle: playerState["theta"], size: Vector2.all(128), anchor: Anchor.center);
+  return PlayerComponent(position: Vector2(playerState["x"],playerState["y"]), angle: playerState["theta"], health: 50);
 }
 
 //Socket publishers
