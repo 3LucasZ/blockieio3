@@ -61,6 +61,8 @@ class Game:
                     player.dx = newData["data"]
                 elif newData["type"] == "dy":
                     player.dy = newData["data"]
+                elif newData["type"] == "selected":
+                    player.selected = newData["data"]
                 else:
                     print("the received json data is unsupported.")
             except:
@@ -72,5 +74,11 @@ class Game:
             await asyncio.sleep(1 / self.fps)
 
     async def periodic(self):
+        updPlayers = []
         for player in self.players:
-            await player.periodic(self.toJson())
+            try:
+                await player.periodic(self.toJson())
+                updPlayers.append(player)
+            except:
+                print("Player disconnected")
+        self.players = updPlayers

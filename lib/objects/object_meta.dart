@@ -1,86 +1,78 @@
 class GameObjectMeta {
   final String name;
   final String image;
-  final String type;
   final double height;
   final double width;
-  final Function activate;
+  final Function place;
+
   GameObjectMeta(
-      {required String name,
-        required String image,
-        required String type,
-        required Function activate,
-        double height = 50,
-        double width = 50})
-      : name = name,
-        image = image,
-        type = type,
-        activate = activate,
-        height = height,
-        width = width;
+      {required this.name,
+      required this.image,
+      required this.height,
+      required this.width,
+      required this.place});
 }
 
 //tiles
 GameObjectMeta grassMeta = GameObjectMeta(
-  name: 'grass',
-  image: 'grass_tile.jpeg',
-  type: 'placeable',
-  activate: () {
-
-  },
-);
+    name: 'grass',
+    image: 'grass_tile.jpeg',
+    height: 100,
+    width: 100,
+    place: () {});
 GameObjectMeta woodMeta = GameObjectMeta(
-  name: 'wood',
-  image: 'wood_tile.jpeg',
-  type: 'placeable',
-  activate: () {
-
-  },
-);
+    name: 'wood', image: 'wood_tile.jpeg', height: 100, width: 100, place: () {});
 //misc
 GameObjectMeta noneMeta = GameObjectMeta(
-  name: 'none',
-  image: 'none.png',
-  type: 'none',
-  activate: () {},
-);
+    name: 'none', image: 'none.png', height: 100, width: 100, place: () {});
 //spinning
-GameObjectMeta spikeMeta =  GameObjectMeta(
+GameObjectMeta spikeMeta = GameObjectMeta(
   name: 'spike',
   image: 'spike.png',
-  type: 'placeable',
-  activate: () {
-
-  },
+  height: 100,
+  width: 100,
+  place: () {},
 );
 //tools
-GameObjectMeta bowMeta =  GameObjectMeta(
+GameObjectMeta bowMeta = GameObjectMeta(
   name: 'bow',
   image: 'bow.png',
-  type: 'tool',
-  height: 50,
-  width: 22,
-  activate: () {
-
-  },
+  height: 100,
+  width: 44,
+  place: () {},
 );
-GameObjectMeta katanaMeta =  GameObjectMeta(
+GameObjectMeta katanaMeta = GameObjectMeta(
   name: 'katana',
   image: 'katana.png',
-  type: 'tool',
   height: 120,
   width: 24,
-  activate: () {
-
-  },
+  place: () {},
 );
 
 //projectiles
-GameObjectMeta arrowMeta =  GameObjectMeta(
+GameObjectMeta arrowMeta = GameObjectMeta(
   name: 'arrow',
   image: 'arrow.png',
-  type: 'projectile',
-  height: 10,
-  width: 50,
-  activate: () {},
+  height: 20,
+  width: 100,
+  place: () {},
 );
+
+GameObjectMeta getMetaByName(String name) {
+  if (name == 'wood') {
+    return woodMeta;
+  } else if (name == 'grass') {
+    return grassMeta;
+  } else if (name == 'spike') {
+    return spikeMeta;
+  } else if (name == 'bow') {
+    return bowMeta;
+  } else if (name == 'arrow') {
+    return arrowMeta;
+  } else if (name == 'katana') {
+    return katanaMeta;
+  } else {
+    //print(name + ' not found!');
+    return noneMeta;
+  }
+}

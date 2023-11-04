@@ -17,19 +17,22 @@ Future<void> loadAssets() async {
 
 class MyGame extends FlameGame {
   List<Component> spriteComponents = [];
+
   @override
   Color backgroundColor() => const Color(0xffa1ef8b);
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
     await loadAssets();
   }
+
   @override
   void update(double dt) {
     super.update(dt);
     removeAll(spriteComponents);
     spriteComponents.clear();
-    for (Map<String, dynamic> player in gameState["players"]){
+    for (Map<String, dynamic> player in gameState["players"]) {
       SpriteComponent next = convert_player(player);
       spriteComponents.add(next);
       add(next);

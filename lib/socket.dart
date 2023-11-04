@@ -8,14 +8,19 @@ import 'constants.dart';
 import 'objects/player_component.dart';
 
 //Create the socket
-WebSocketChannel socket = WebSocketChannel.connect(Uri.parse('ws://$serverIP:$serverPort'));
+WebSocketChannel socket =
+    WebSocketChannel.connect(Uri.parse('ws://$serverIP:$serverPort'));
 Map<String, dynamic> gameState = {
   "players": [],
 };
 
 //Socket converters
-SpriteComponent convert_player(Map<String, dynamic> playerState){
-  return PlayerComponent(position: Vector2(playerState["x"],playerState["y"]), angle: playerState["theta"], health: 50);
+SpriteComponent convert_player(Map<String, dynamic> playerState) {
+  return PlayerComponent(
+      position: Vector2(playerState["x"], playerState["y"]),
+      angle: playerState["theta"],
+      health: 50,
+      selected: playerState["selected"]);
 }
 
 //Socket publishers
@@ -26,6 +31,7 @@ void publish_dx(double dx) {
   };
   socket.sink.add(jsonEncode(msg));
 }
+
 void publish_dy(double dy) {
   Map<String, dynamic> msg = {
     'type': 'dy',
@@ -33,10 +39,19 @@ void publish_dy(double dy) {
   };
   socket.sink.add(jsonEncode(msg));
 }
-void publish_theta(double theta){
+
+void publish_theta(double theta) {
   Map<String, dynamic> msg = {
     'type': 'theta',
     'data': theta,
+  };
+  socket.sink.add(jsonEncode(msg));
+}
+
+void publish_selected(String selected) {
+  Map<String, dynamic> msg = {
+    'type': 'selected',
+    'data': selected,
   };
   socket.sink.add(jsonEncode(msg));
 }

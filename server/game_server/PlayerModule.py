@@ -12,7 +12,7 @@ class Player:
         self.theta = 0
         self.dx = 0
         self.dy = 0
-        self.selected = "wood"
+        self.selected = "none"
         self.health = 100
 
     async def periodic(self, gameState: str):
@@ -30,8 +30,8 @@ class Player:
             "theta": self.theta,
             "dx": self.dx,
             "dy": self.dy,
-            "selected": "wood",
-            "health": 100,
+            "selected": self.selected,
+            "health": self.health,
         }
 
     def toJson(self):

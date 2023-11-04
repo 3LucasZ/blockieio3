@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../objects/object_meta.dart';
+import '../socket.dart';
 
 class InventoryBar extends StatelessWidget {
   InventoryBar({
@@ -39,6 +40,7 @@ class InventoryBar extends StatelessWidget {
 
 class InventorySquare extends StatelessWidget {
   final GameObjectMeta object;
+
   const InventorySquare(this.object, {super.key});
 
   @override
@@ -47,7 +49,7 @@ class InventorySquare extends StatelessWidget {
     double tileSize = screenSize.width / 16;
     return GestureDetector(
       onTap: () {
-
+        publish_selected(object.name);
       },
       child: Container(
         width: tileSize,
@@ -57,17 +59,17 @@ class InventorySquare extends StatelessWidget {
           padding: EdgeInsets.all(tileSize / 6),
           child: (object.name != 'none')
               ? Image(
-            width: double.infinity,
-            height: double.infinity,
-            image: AssetImage('images/${object.image}'),
-          )
+                  width: double.infinity,
+                  height: double.infinity,
+                  image: AssetImage('images/${object.image}'),
+                )
               : FittedBox(
-            fit: BoxFit.fitWidth,
-            child: Text(
-              object.name,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    object.name,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
         ),
       ),
     );
