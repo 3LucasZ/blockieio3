@@ -1,18 +1,19 @@
 import 'dart:math';
+import 'package:blockieio3/socket.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 
 
-class Joystick2 extends StatefulWidget {
-  const Joystick2({super.key});
+class ThetaJoystick extends StatefulWidget {
+  const ThetaJoystick({super.key});
 
   @override
-  State<Joystick2> createState() => _Joystick2State();
+  State<ThetaJoystick> createState() => _ThetaJoystickState();
 }
 
-class _Joystick2State extends State<Joystick2> {
+class _ThetaJoystickState extends State<ThetaJoystick> {
   Offset joystickCenter = const Offset(15, 25);
   double outerDiameter = 0; //set at runtime
   double innerDiameter = 0; //set at runtime
@@ -20,24 +21,19 @@ class _Joystick2State extends State<Joystick2> {
   double lastSentAngle = 0;
 
   void updateDelta(Offset newDelta) {
-    // if (kDebugMode) {
-    //   print("newDelta:$newDelta");
-    // }
-    //myAngle = delta.direction;
-
+    //send angle when necessary
     if ((newDelta.direction-lastSentAngle).abs()>=math.pi/20 && newDelta.distance>0.01){
+      publish_theta(newDelta.direction);
       lastSentAngle=newDelta.direction;
-      if (kDebugMode) {
-        print("update");
-      }
     }
+    //update joystick UI
     setState(() {
       currentDelta = newDelta;
     });
   }
 
-  void updateDeltaFromDrag(Offset dragPosition) {
-    Offset newDelta = (dragPosition - (joystickCenter + Offset(outerDiameter,outerDiameter) / 2))/(outerDiameter/2);
+  void updateDeltaFromDragPos(Offset dragPos) {
+    Offset newDelta = (dragPos - (joystickCenter + Offset(outerDiameter,outerDiameter) / 2))/(outerDiameter/2);
     updateDelta(
       Offset.fromDirection(
         newDelta.direction,
@@ -88,11 +84,11 @@ class _Joystick2State extends State<Joystick2> {
   }
 
   void onDragStart(DragStartDetails d) {
-    updateDeltaFromDrag(d.localPosition);
+    updateDeltaFromDragPos(d.localPosition);
   }
 
   void onDragUpdate(DragUpdateDetails d) {
-    updateDeltaFromDrag(d.localPosition);
+    updateDeltaFromDragPos(d.localPosition);
   }
 
   void onDragEnd(DragEndDetails d) {

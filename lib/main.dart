@@ -1,26 +1,27 @@
+import 'dart:convert';
+
 import 'package:blockieio3/player.dart';
+import 'package:blockieio3/socket.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'UI/joystick2.dart';
+import 'UI/theta_joystick.dart';
+import 'game.dart';
 
-class MyGame extends FlameGame {
-  @override
-  Future<void> onLoad() async {
-    await super.onLoad();
 
-    add(
-      Player()
-        ..position = size / 2
-        ..width = 50
-        ..height = 100
-        ..anchor = Anchor.center,
-    );
-  }
-}
-void main() {
-  runApp(const MyApp());
+void main() async {
+  socket.stream.listen((rawMsg) async {
+    Map<String, dynamic> msg = jsonDecode(rawMsg);
+    print(msg);
+    if (msg['type']=='registered'){
+      runApp(const MyApp());
+    } else if (msg['type']=='gameState'){
+      gameState = msg;
+    } else {
+      print("data of type: ${msg['type']}is not supported.");
+    }
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -37,9 +38,7 @@ class MyApp extends StatelessWidget {
               onHover: processMouse,
               child: GameWidget(game: MyGame()),
             ),
-
-            const Joystick2(),
-
+            const ThetaJoystick(),
           ],
         ),
       ),
