@@ -7,14 +7,14 @@ import 'dart:math' as math;
 
 
 
-class ThetaJoystick extends StatefulWidget {
-  const ThetaJoystick({super.key});
+class VelocityJoystick extends StatefulWidget {
+  const VelocityJoystick({super.key});
 
   @override
-  State<ThetaJoystick> createState() => _ThetaJoystickState();
+  State<VelocityJoystick> createState() => _VelocityJoystickState();
 }
 
-class _ThetaJoystickState extends State<ThetaJoystick> {
+class _VelocityJoystickState extends State<VelocityJoystick> {
   Offset joystickCenter = const Offset(15, 25);
   double outerDiameter = 0; //set at runtime
   double innerDiameter = 0; //set at runtime
@@ -25,8 +25,9 @@ class _ThetaJoystickState extends State<ThetaJoystick> {
   void updateDelta(Offset newDelta) {
     //publish angle if dt > 20ms
     int curEvent = DateTime.now().millisecondsSinceEpoch;
-    if (curEvent - lastEvent > cycleTime){
-      publish_theta(newDelta.direction);
+    if (curEvent - lastEvent > cycleTime || newDelta.distance<0.0001){
+      publish_dx(newDelta.dx);
+      publish_dy(newDelta.dy);
       lastEvent = curEvent;
     }
     //update joystick UI
@@ -51,7 +52,7 @@ class _ThetaJoystickState extends State<ThetaJoystick> {
     outerDiameter = screenSize.width / 7;
     innerDiameter = screenSize.width / 14;
     return Positioned(
-      right: joystickCenter.dx,
+      left: joystickCenter.dx,
       bottom: joystickCenter.dy,
       child: Container(
         width: outerDiameter,
@@ -100,6 +101,6 @@ class _ThetaJoystickState extends State<ThetaJoystick> {
 }
 
 void processMouse(PointerEvent details) {
- // Offset pointerOffset = Offset(details.position.dx - (screenSize.width / 2), details.position.dy - (screenSize.height / 2));
+  // Offset pointerOffset = Offset(details.position.dx - (screenSize.width / 2), details.position.dy - (screenSize.height / 2));
   //myAngle = pointerOffset.direction;
 }

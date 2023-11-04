@@ -14,7 +14,7 @@ Map<String, dynamic> gameState = {
 
 //Socket converters
 SpriteComponent convert_player(Map<String, dynamic> playerState){
-  return SpriteComponent(sprite: Sprite(Flame.images.fromCache('player.png')),position: Vector2(150,100), angle: playerState["theta"], size: Vector2.all(128), anchor: Anchor.center);
+  return SpriteComponent(sprite: Sprite(Flame.images.fromCache('player.png')),position: Vector2(playerState["x"],playerState["y"]), angle: playerState["theta"], size: Vector2.all(128), anchor: Anchor.center);
 }
 
 //Socket publishers

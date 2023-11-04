@@ -16,8 +16,8 @@ class Player:
         self.health = 100
 
     async def periodic(self, gameState: str):
-        self.x += self.dx
-        self.y += self.dy
+        self.x += self.dx * 15
+        self.y += self.dy * 15
 
         await self.websocket.send(gameState)
 

@@ -27,7 +27,7 @@ class Game:
             "players": [player.toMap() for player in self.players],
             "timeStamp": time.time(),
         }
-        print(dict)
+        # print(dict)
         return json.dumps(dict)
 
     async def handle_new_connection(self, newWebsocket, path):
@@ -53,7 +53,7 @@ class Game:
         while True:
             try:
                 newJsonData = await player.websocket.recv()
-                print("recv:", newJsonData)
+                # print("recv:", newJsonData)
                 newData = json.loads(newJsonData)
                 if newData["type"] == "theta":
                     player.theta = newData["data"]
