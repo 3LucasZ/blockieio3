@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'UI/constants.dart';
+import 'constants.dart';
 
 //Create the socket
 WebSocketChannel socket = WebSocketChannel.connect(Uri.parse('ws://$serverIP:$serverPort'));

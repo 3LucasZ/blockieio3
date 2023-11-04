@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:blockieio3/UI/constants.dart';
+import 'package:blockieio3/constants.dart';
 import 'package:blockieio3/socket.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
